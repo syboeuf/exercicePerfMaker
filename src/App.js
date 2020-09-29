@@ -3,32 +3,28 @@ import { fromEvent, interval } from "rxjs";
 
 const App = () => {
   const [text, setText] = useState("FizzBuzz");
-  const clickRef = useRef(0);
+  const countClickRef = useRef(0);
 
   useEffect(() => {
-    fromEvent(document, "click").subscribe(() => (clickRef.current += 1));
+    fromEvent(document, "click").subscribe(() => (countClickRef.current += 1));
     startTimer();
   }, []);
 
   const startTimer = () => {
     const source = interval(1000);
     const subscribe = source.subscribe(() => {
-      let para;
-      const click = clickRef.current;
-      if (click % 5 === 0 && click % 3 === 0) {
-        console.log("FizzBuzz");
-        para = "FizzBuzz";
-      } else if (click % 3 === 0) {
-        console.log("Fizz");
-        para = "Fizz";
-      } else if (click % 5 === 0) {
-        console.log("Buzz");
-        para = "Buzz";
+      let result;
+      const nbOfClick = countClickRef.current;
+      if (nbOfClick % 5 === 0 && nbOfClick % 3 === 0) {
+        result = "FizzBuzz";
+      } else if (nbOfClick % 3 === 0) {
+        result = "Fizz";
+      } else if (nbOfClick % 5 === 0) {
+        result = "Buzz";
       } else {
-        console.log(click);
-        para = click;
+        result = nbOfClick;
       }
-      setText(para);
+      setText(result);
     });
   };
 
